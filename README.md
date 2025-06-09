@@ -30,7 +30,7 @@ Permettre aux utilisateurs de :
 
 ## 📷 Aperçu
 
-![screenshot](screenshot.png) ← (tu peux prendre une capture de ton app et la nommer screenshot.png)
+![screenshot](![alt text](image.png))
 
 ## 🚀 Lancer le projet
 
@@ -40,5 +40,5 @@ Permettre aux utilisateurs de :
 
 ---
 
-💻 Réalisé par : [The_Real_Moha🇺🇸​🔥]
+💻 Réalisé par : TheRealMoha🇺🇸​🔥
 

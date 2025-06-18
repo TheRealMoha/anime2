@@ -32,7 +32,7 @@ Permettre aux utilisateurs de :
 
 ![screenshot](![alt text](image.png))
 ![screenshot]
-![image](https://github.com/user-attachments/assets/7758e6da-dead-429b-9c0b-f629bac590da)
+
 
 
 ## 🚀 Lancer le projet

@@ -8,7 +8,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const homeLink = document.getElementById("homeLink");
   const backToTopButton = document.getElementById("back-to-top");
   const navLinks = document.querySelectorAll('.nav-right a');
-  const sections = document.querySelectorAll('section');
 
   // Variables
   let konamiIndex = 0;
@@ -29,11 +28,20 @@ document.addEventListener('DOMContentLoaded', function() {
     link.addEventListener('click', function(e) {
       e.preventDefault();
       const targetId = this.getAttribute('href');
+      
+      if (targetId === '#top') {
+        scrollToTop();
+        return;
+      }
+      
       const targetElement = document.querySelector(targetId);
       if (targetElement) {
-        targetElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
+        const headerHeight = document.querySelector('header').offsetHeight;
+        const targetPosition = targetElement.offsetTop - headerHeight;
+        
+        window.scrollTo({
+          top: targetPosition,
+          behavior: 'smooth'
         });
       }
     });
@@ -42,6 +50,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Fonctions
   function toggleSearchOptions() {
     searchOptions.classList.toggle("hidden");
+    if (!searchOptions.classList.contains("hidden")) {
+      input.focus();
+    }
   }
 
   function handleSearchInput() {
@@ -62,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
   function handleHomeClick(e) {
     e.preventDefault();
     scrollToTop();
-    fetchAnime(); // Recharge les animes populaires
+    fetchAnime();
   }
 
   function scrollToTop() {
@@ -75,18 +86,15 @@ document.addEventListener('DOMContentLoaded', function() {
   function handleScroll() {
     // Bouton back-to-top
     if (backToTopButton) {
-      if (window.scrollY > 300) {
-        backToTopButton.classList.add('visible');
-      } else {
-        backToTopButton.classList.remove('visible');
-      }
+      backToTopButton.classList.toggle('visible', window.scrollY > 300);
     }
 
     // Gestion de la classe active pour la navigation
     const scrollPos = window.scrollY + 100;
+    const headerHeight = document.querySelector('header').offsetHeight;
     
-    sections.forEach(section => {
-      const sectionTop = section.offsetTop;
+    document.querySelectorAll('section').forEach(section => {
+      const sectionTop = section.offsetTop - headerHeight;
       const sectionHeight = section.offsetHeight;
       
       if (scrollPos >= sectionTop && scrollPos < (sectionTop + sectionHeight)) {
@@ -99,6 +107,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
       }
     });
+
+    // Active le lien Accueil quand on est en haut
+    if (window.scrollY < 100) {
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#top') {
+          link.classList.add('active');
+        }
+      });
+    }
   }
 
   function handleKonamiCode(e) {
@@ -140,31 +158,110 @@ document.addEventListener('DOMContentLoaded', function() {
     container.innerHTML = "";
     
     if (!list || list.length === 0) {
-      container.innerHTML = "<p class='no-results'>Aucun anime trouvé. Essayez une autre recherche.</p>";
+      container.innerHTML = "<p class='no-results'>Aucun résultat</p>";
       return;
     }
-
+  
+    const isMobile = window.innerWidth < 600;
     const fragment = document.createDocumentFragment();
     
     list.forEach(anime => {
       const card = document.createElement("div");
       card.className = "card";
-      card.innerHTML = `
-        <img src="${anime.images?.jpg?.image_url || 'https://via.placeholder.com/180x250'}" 
-             alt="${anime.title}" 
-             onerror="this.src='https://via.placeholder.com/180x250'">
-        <h3>${anime.title}</h3>
-        <p>Score : ${anime.score ? anime.score.toFixed(1) : "N/A"}</p>
-        <a href="${anime.url || '#'}" target="_blank" rel="noopener noreferrer">
-          Voir sur MyAnimeList
-        </a>
-      `;
+      
+      // Version simplifiée pour mobile
+      if (isMobile) {
+        card.innerHTML = `
+          <img src="${anime.images?.jpg?.image_url || 'https://via.placeholder.com/120x170'}" 
+               alt="${anime.title}"
+               loading="lazy">
+          <h3>${anime.title}</h3>
+          <p>⭐ ${anime.score?.toFixed(1) || 'N/A'}</p>
+        `;
+      } 
+      // Version complète pour desktop
+      else {
+        card.innerHTML = `
+          <img src="${anime.images?.jpg?.image_url || 'https://via.placeholder.com/180x250'}" 
+               alt="${anime.title}">
+          <h3>${anime.title}</h3>
+          <p>Score : ${anime.score ? anime.score.toFixed(1) : "N/A"}</p>
+          <a href="${anime.url || '#'}" target="_blank">
+            Voir sur MyAnimeList
+          </a>
+        `;
+      }
+      
       fragment.appendChild(card);
     });
     
     container.appendChild(fragment);
   }
 
-  // Charger les animes populaires au début
+
+
+  document.addEventListener('DOMContentLoaded', function() {
+    // Ajout du menu burger pour mobile
+    const menuToggle = document.createElement('button');
+    menuToggle.className = 'menu-toggle';
+    menuToggle.innerHTML = '☰';
+    menuToggle.setAttribute('aria-label', 'Menu');
+    document.querySelector('.nav-left').appendChild(menuToggle);
+  
+    menuToggle.addEventListener('click', function() {
+      document.querySelector('.nav-right').classList.toggle('active');
+    });
+  
+    // Optimisation du chargement des images pour mobile
+    const lazyLoadImages = function() {
+      const images = document.querySelectorAll('.card img');
+      
+      images.forEach(img => {
+        if (img.getBoundingClientRect().top < window.innerHeight + 100) {
+          img.src = img.dataset.src || img.src;
+        }
+      });
+    };
+  
+    // Modification de la fonction displayAnime pour le lazy loading
+    function displayAnime(list) {
+      container.innerHTML = "";
+      
+      if (!list || list.length === 0) {
+        container.innerHTML = "<p class='no-results'>Aucun anime trouvé. Essayez une autre recherche.</p>";
+        return;
+      }
+  
+      const fragment = document.createDocumentFragment();
+      
+      list.forEach(anime => {
+        const card = document.createElement("div");
+        card.className = "card";
+        card.innerHTML = `
+          <img data-src="${anime.images?.jpg?.image_url || 'https://via.placeholder.com/180x250'}" 
+               alt="${anime.title}" 
+               onerror="this.src='https://via.placeholder.com/180x250'">
+          <h3>${anime.title}</h3>
+          <p>Score : ${anime.score ? anime.score.toFixed(1) : "N/A"}</p>
+          <a href="${anime.url || '#'}" target="_blank" rel="noopener noreferrer">
+            Voir sur MyAnimeList
+          </a>
+        `;
+        fragment.appendChild(card);
+      });
+      
+      container.appendChild(fragment);
+      lazyLoadImages();
+    }
+  
+    // Écouteur pour le lazy loading
+    window.addEventListener('scroll', lazyLoadImages);
+    window.addEventListener('resize', lazyLoadImages);
+  
+    // ... (le reste de ton JavaScript existant reste inchangé) ...
+  });
+
+  // Initialisation
   fetchAnime();
+  handleScroll();
 });

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Découvre les Animes</title>
+  <link rel="stylesheet" href="solution.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link rel="shortcut icon" href="Luffy icon.jpeg" type="image/png">
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="nav-left">
+        <div class="logo">
+          <img src="cooltext483954898456295.png" alt="Logo">
+        </div>
+        <span class="title">Découvre les animes</span>
+        <button class="mobile-menu-btn">☰</button>
+      </div>
+
+      <div class="nav-right">
+        <a href="#" id="homeLink">Accueil</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+      </div>
+    </nav>
+    <button id="back-to-top" aria-label="Retour en haut">↑</button>
+  </header>
+
+  <main class="container">
+    <div class="filters">
+      <button id="toggleSearch">🔍</button>
+      <div id="searchOptions" class="hidden">
+        <input type="text" id="searchInput" placeholder="Recherche un anime...">
+        <select id="genreSelect">
+          <option value="">Tous les genres</option>
+          <option value="1">Action</option>
+          <option value="2">Aventure</option>
+          <option value="4">Comédie</option>
+          <option value="22">Romance</option>
+          <option value="8">Drame</option>
+          <option value="10">Fantasy</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="animeContainer" class="anime-grid"></div>
+  </main>
+
+  <section id="about" class="about-section">
+    <div class="about-container">
+      <h2 class="section-title">📌 À Propos de <span class="highlight">Mangas Univers</span></h2>
+      
+      <div class="mission-box">
+        <p class="welcome-text">Bienvenue dans votre nouvel univers dédié aux animes et mangas !</p>
+        <p>Nous sommes une équipe passionnée dédiée à révolutionner votre expérience anime. Notre objectif ? Vous faire gagner du temps en proposant des recommandations sur mesure et des classements fiables, loin des tendances génériques.</p>
+      </div>
+  
+      <div class="grid-container">
+        <div class="card">
+          <h3>🎯 Notre Engagement</h3>
+          <ul class="feature-list">
+            <li><span class="emoji">✅</span> Suggestions ultra-personnalisées</li>
+            <li><span class="emoji">✅</span> Critiques sans spoilers</li>
+            <li><span class="emoji">✅</span> Communauté bienveillante</li>
+          </ul>
+        </div>
+  
+        <div class="card">
+          <h3>⚙️ Fonctionnalités</h3>
+          <ul class="feature-list">
+            <li><span class="emoji">🔍</span> Recherche intelligente</li>
+            <li><span class="emoji">📊</span> Classements thématiques</li>
+            <li><span class="emoji">💾</span> Gestion de watchlist</li>
+          </ul>
+        </div>
+      </div>
+  
+      <div class="team-section">
+        <h3>👥 Qui sommes-nous ?</h3>
+        <p>Un collectif de passionnés cumulant :</p>
+        <ul class="team-list">
+          <li><span class="emoji">⏳</span> 10+ ans d'expérience anime/manga</li>
+          <li><span class="emoji">❤️</span> Un amour inconditionnel pour les bonnes histoires</li>
+          <li><span class="emoji">🚀</span> La volonté de rendre ce site utile à tous</li>
+        </ul>
+      </div>
+  
+      <div class="cta-box">
+        <p>Prêt à découvrir des pépites adaptées à vos goûts ?</p>
+        <a href="#contact" class="cta-button">Contactez-nous →</a>
+      </div>
+  
+      <div class="fun-fact">
+        <p>🎮 <em>Saviez-vous que ?</em> Notre site contient des easter eggs cachés pour les vrais fans !</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact-section">
+    <div class="contact-container">
+      <h2>📨 Contactez-nous</h2>
+      <p>Une question ou suggestion ? Écrivez-nous !</p>
+      <!-- Ajoute ici ton formulaire de contact si besoin -->
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-left">
+        <h3>Pourquoi ce site ?</h3>
+        <p>Pour aider les fans à découvrir des animes facilement, selon leurs goûts.</p>
+        <div class="newsletter">
+          <h4>Newsletter</h4>
+          <form class="newsletter-form">
+            <input type="email" placeholder="Votre email" required>
+            <button type="submit">S'abonner</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-middle">
+        <h3>Liens rapides</h3>
+        <ul class="quick-links">
+          <li><a href="#">Accueil</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-right">
+        <h3>Suis-nous</h3>
+        <div class="social-icons">
+          <a href="https://instagram.com/al_amine_mballo" target="_blank" aria-label="Instagram">
+            <i class="fab fa-instagram"></i> Instagram
+          </a>
+          <a href="https://tiktok.com/@mohamed_al_amine_mballo" target="_blank" aria-label="TikTok">
+            <i class="fab fa-tiktok"></i> TikTok
+          </a>
+          <a href="https://youtube.com/@Mohamed_Mballo" target="_blank" aria-label="YouTube">
+            <i class="fab fa-youtube"></i> YouTube
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Mohamed - Tous droits réservés</p>
+      <div class="legal-links">
+        <a href="#">Politique de confidentialité</a>
+        <a href="#">Conditions d'utilisation</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="solution.js"></script>
+</body>
+</html>
